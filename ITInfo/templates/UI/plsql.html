@@ -1,0 +1,88 @@
+{% extends 'UI/header.html'%}
+{%load staticfiles%}
+{%block content%}
+<head>
+<link rel="stylesheet" href="{%static '/CSS/Home.CSS'%}">
+</head>
+<body>
+
+
+       {%if nodata%}
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <h1 align="center"  >No Data for your related searches</h1>
+
+            {%endif%}
+<section >
+  <nav >
+    {% if details%}&nbsp&nbsp
+    <ul>
+      {%for detail in details%}
+        <li><a href="{{ detail.get_absolute_url }}" > {{detail.Question}}</a></li>
+        &nbsp
+      {%endfor%}
+    </ul>
+    {%else%}
+     <h2>No Questions are available</h2>
+    {%endif%}
+      <form method="post" action="{% url 'question_submit'%}">
+              {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1"><h4 class="text" align="center">Add Your Questions Here :</h4></label>
+            <textarea name="question" class="form-control" id="exampleFormControlTextarea1" rows="5" cols="1"></textarea>
+        </div>
+            <div align="center">
+            <button class="btn btn-primary" type="submit"> Submit Question </button>
+        </div>
+      </form>
+  </nav>
+  <article>
+            {%if flag%}
+            <div class="container" align="center">
+            <img align="center" src="{% static "images/qu.gif"%}" border="5" height="400" width="350">
+                </div>
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <h1 align="center"  >Please click on Questions</h1>
+
+            {%endif%}
+
+
+      {%if det%}
+            {%for ob in det%}
+                    <h1>(Q.) {{ob.Question}}</h1><hr>
+            {%endfor%}
+      {%endif%}
+      {%if objs%}
+            {%for ob in objs%}
+                &nbsp&nbsp&nbsp&nbsp
+                <h2>{{ob.Answ}}</h2>
+                    &nbsp&nbsp
+                    <h3 align="right"> - answered by {{ob.mail}} </h3><hr>
+            {%endfor%}
+      {%endif%}
+
+      {%if det%}
+        {%for de in det%}
+       <form method="post" action= "{% url 'answer_submit' de.id %} ">
+           {%endfor%}
+              {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleFormControlTextarea2"><h4>Paste your Answer Here</h4></label>
+            <textarea name="answer" class="form-control" id="exampleFormControlTextarea2" rows="5" cols="1"></textarea>
+
+        </div>
+              <div class="col-md-3 mb-3">
+                  <label for="validationDefault04"><h4>Enter your Email ID</h4></label>
+                <input type="email" name="email" class="form-control" id="validationDefault04"
+                       placeholder="Enter your Email" required>
+            </div>
+            <div align="center">
+            <button class="btn btn-primary" type="submit"> Post your Answer </button>
+        </div>
+      </form>
+      {%endif%}
+  </article>
+</section>
+
+
+</body>
+{%endblock%}

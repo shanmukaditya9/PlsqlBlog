@@ -1,0 +1,11 @@
+<body>
+      {%if objs%}
+        {%for obj in objs%}
+            <h1>{{obj.Question}}</h1>
+            &nbsp&nbsp&nbsp&nbsp
+            <p> {{obj.Answer}}</p>
+        {%endfor%}
+      {%else%}
+      <p>no available</p>
+      {%endif%}
+</body>
